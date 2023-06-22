@@ -1,0 +1,32 @@
+{
+  "name": "@inhibitor1217/babylonjs-wgsl",
+  "description": "WGSL shader utility support for Babylon.js WebGPU engine",
+  "version": "0.1.0",
+  "author": "inhibitor1217 <inhibitor@kaist.ac.kr>",
+  "license": "MIT",
+  "exports": {
+    ".": {
+      "import": "./dist/babylonjs-wgsl.mjs",
+      "require": "./dist/babylonjs-wgsl.umd.cjs",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "peerDependencies": {
+    "@babylonjs/core": "^5.0.0 || ^6.0.0"
+  },
+  "devDependencies": {
+    "@babylonjs/core": "^6.8.0",
+    "typescript": "^5.1.0",
+    "vite": "^4.3.0"
+  },
+  "scripts": {
+    "build": "yarn build:clean && yarn build:vite && yarn build:ts",
+    "build:clean": "rm -rf dist",
+    "build:ts": "tsc -p tsconfig.json --outDir dist",
+    "build:vite": "vite build"
+  },
+  "packageManager": "yarn@3.6.0"
+}
