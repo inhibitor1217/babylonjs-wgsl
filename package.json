@@ -1,7 +1,7 @@
 {
   "name": "@inhibitor1217/babylonjs-wgsl",
   "description": "WGSL shader utility support for Babylon.js WebGPU engine",
-  "version": "0.1.0",
+  "version": "0.2.0-alpha.1",
   "author": "inhibitor1217 <inhibitor@kaist.ac.kr>",
   "license": "MIT",
   "exports": {
