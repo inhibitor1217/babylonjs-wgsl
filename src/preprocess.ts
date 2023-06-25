@@ -3,7 +3,7 @@ import { warn } from './log'
 const includeStatementRegExp = /(?:^|\n)#include\s*<(?!sceneUboDeclaration|meshUboDeclaration)([^>]+)>/g
 
 function loadFromIncludePath(includePath: string): Promise<string> {
-  return import.meta.glob('./lib/*.wgsl', { as: 'raw' })[includePath]()
+  return import.meta.glob('./lib/**/*.wgsl', { as: 'raw' })[includePath]()
     .catch(() => {
       warn(`Failed to load included shader lib: ${includePath}`)
       return ''
