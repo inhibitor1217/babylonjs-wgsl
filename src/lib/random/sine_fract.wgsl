@@ -5,12 +5,12 @@ struct _RANDOM_SINE_FRACT__RandomSeed {
 
 const _RANDOM_SINCE_FRACT__randomSeed: _RANDOM_SINE_FRACT__RandomSeed = _RANDOM_SINE_FRACT__RandomSeed(
   vec4<f32>(
-    12.9898,
+    29.898,
     78.233,
     37.719,
     63.137,
   ),
-  43758.5453,
+  45405.32359,
 );
 
 fn RANDOM_SINE_FRACT__random__f32(value: f32) -> f32 {
