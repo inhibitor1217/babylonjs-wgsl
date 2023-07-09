@@ -53,7 +53,7 @@ fn NOISE_SIMPLEX__noise2d__f32(pos: vec2<f32>) -> f32 {
   var m  = vec3<f32>(dot(x0, x0), dot(x1, x1), dot(x2, x2));
   let px = vec3<f32>(dot(g0, x0), dot(g1, x1), dot(g2, x2));
 
-  m = max(0.5 - m, 0);
+  m = max(0.5 - m, vec3<f32>(0.));
   let m4 = m * m * m * m;
 
   return 99.2 * dot(m4, px);
