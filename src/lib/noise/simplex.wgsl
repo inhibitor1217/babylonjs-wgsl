@@ -29,7 +29,7 @@ fn NOISE_SIMPLEX__noise2d__f32(pos: vec2<f32>) -> f32 {
   let x0 = pos - i + dot(i, vec2<f32>(C1));
 
   // Other corners
-  let i1 = x0.x > x0.y ? vec2<f32>(1., 0.) : vec2<f32>(0., 1.);
+  let i1 = select(vec2<f32>(0., 1.), vec2<f32>(1., 0.), x0.x > x0.y);
   let x1 = x0 - i1 + C1;
   let x2 = x0 - 1. + 2. * C1;
 
