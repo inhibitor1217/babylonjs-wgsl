@@ -1,3 +1,7 @@
+fn _NOISE_SIMPLEX__mod289_2d(pos: vec2<f32>) -> vec2<f32> {
+  return pos - floor(pos / 289.) * 289.;
+}
+
 fn _NOISE_SIMPLEX__mod289_3d(pos: vec3<f32>) -> vec3<f32> {
   return pos - floor(pos / 289.) * 289.;
 }
@@ -34,7 +38,7 @@ fn NOISE_SIMPLEX__noise2d__f32(pos: vec2<f32>) -> f32 {
   let x2 = x0 - 1. + 2. * C1;
 
   // Permutations
-  i = _NOISE_SIMPLEX__mod289_3d(i);
+  i = _NOISE_SIMPLEX__mod289_2d(i);
   var p = _NOISE_SIMPLEX__permute_3d(    i.y + vec3<f32>(0, i1.y, 1));
       p = _NOISE_SIMPLEX__permute_3d(p + i.x + vec3<f32>(0, i1.x, 1));
 
