@@ -10,10 +10,53 @@ fn _NOISE_SIMPLEX__mod49_4d(pos: vec4<f32>) -> vec4<f32> {
   return pos - floor(pos / 49.) * 49.;
 }
 
+fn _NOISE_SIMPLEX__permute_3d(pos: vec3<f32>) -> vec3<f32> {
+  return _NOISE_SIMPLEX__mod289_3d((pos * 34. + 1.) * pos);
+}
+
 fn _NOISE_SIMPLEX__permute_4d(pos: vec4<f32>) -> vec4<f32> {
   return _NOISE_SIMPLEX__mod289_4d((pos * 34. + 1.) * pos);
 }
 
+// 2D simplex noise by Stefan Gustavson and Ahima Arts
+// https://github.com/keijiro/NoiseShader
+fn NOISE_SIMPLEX__noise2d__f32(pos: vec2<f32>) -> f32 {
+  const C1: f32 = (3. - sqrt(3.)) / 6.;
+  const C2: f32 = (sqrt(3.) - 1.) / 2.;
+
+  // First corner
+  var i  = floor(pos + dot(pos, vec2<f32>(C2)));
+  let x0 = pos - i + dot(i, vec2<f32>(C1));
+
+  // Other corners
+  let i1 = x0.x > x0.y ? vec2<f32>(1., 0.) : vec2<f32>(0., 1.);
+  let x1 = x0 - i1 + C1;
+  let x2 = x0 - 1. + 2. * C1;
+
+  // Permutations
+  i = _NOISE_SIMPLEX__mod289_3d(i);
+  var p = _NOISE_SIMPLEX__permute_3d(    i.y + vec3<f32>(0, i1.y, 1));
+      p = _NOISE_SIMPLEX__permute_3d(p + i.x + vec3<f32>(0, i1.x, 1));
+
+  // Gradients: 41 points uniformly over a unit circle.
+  // The ring size 17*17 = 289 is close to a multiple of 41 (41*7 = 287)
+  let phi = p / 41 * 3.14159265359 * 2;
+  let g0 = vec2<f32>(cos(phi.x), sin(phi.x));
+  let g1 = vec2<f32>(cos(phi.y), sin(phi.y));
+  let g2 = vec2<f32>(cos(phi.z), sin(phi.z));
+
+  // Compute noise and gradient at P
+  var m  = vec3<f32>(dot(x0, x0), dot(x1, x1), dot(x2, x2));
+  let px = vec3<f32>(dot(g0, x0), dot(g1, x1), dot(g2, x2));
+
+  m = max(0.5 - m, 0);
+  let m4 = m * m * m * m;
+
+  return 99.2 * dot(m4, px);
+}
+
+// 3D simplex noise by Stefan Gustavson and Ahima Arts
+// https://github.com/keijiro/NoiseShader
 fn NOISE_SIMPLEX__noise3d__f32(pos: vec3<f32>) -> f32 {
   const C: vec2<f32> = vec2<f32>(1. / 6., 1. / 3.);
   const ZERO: vec4<f32> = vec4<f32>(0.);
@@ -65,8 +108,7 @@ fn NOISE_SIMPLEX__noise3d__f32(pos: vec3<f32>) -> f32 {
   let m = max(0.5 - vec4<f32>(dot(x0, x0), dot(x1, x1), dot(x2, x2), dot(x3, x3)), ZERO);
   let px = vec4<f32>(dot(x0, g0), dot(x1, g1), dot(x2, g2), dot(x3, g3));
 
-  let m3 = m * m * m;
-  let m4 = m3 * m;
+  let m4 = m * m * m * m;
 
   return 107. * dot(m4, px);
 }
