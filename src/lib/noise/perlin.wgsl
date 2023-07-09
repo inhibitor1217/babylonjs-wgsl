@@ -1,6 +1,7 @@
 #include <mix>
 #include <random/sine_fract>
 #include <random/sine_fract_linker>
+#include <random/ndim>
 
 fn NOISE_PERLIN__noise__f32(pos: f32) -> f32 {
   let iPos = floor(pos);
